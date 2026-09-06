@@ -3,6 +3,17 @@ from pydantic import BaseModel
 import pandas as pd
 import joblib
 from datetime import datetime, timezone
+import logging
+import json
+
+
+# Configure logging to stdout
+logging.basicConfig(
+    level=logging.INFO,
+    format="%(message)s"
+)
+
+logger = logging.getLogger("heart-disease-api")
 
 
 # Load trained model
@@ -53,6 +64,16 @@ def predict(data: PatientData):
     prediction = best_model.predict(input_data)[0]
 
     timestamp = datetime.now(timezone.utc).isoformat()
+
+    # Log input features, prediction and timestamp
+    log_data = {
+        "event": "heart_disease_prediction",
+        "input": data.model_dump(),
+        "prediction": str(prediction),
+        "timestamp": timestamp
+    }
+
+    logger.info(json.dumps(log_data))
 
     return {
         "prediction": str(prediction),
