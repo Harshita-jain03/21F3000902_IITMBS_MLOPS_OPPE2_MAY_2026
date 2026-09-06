@@ -1,0 +1,3 @@
+wrk.method = "POST"
+wrk.body = '{"sno":1,"age":63,"gender":1,"cp":1,"trestbps":145,"chol":233,"fbs":1,"restecg":2,"thalach":150,"exang":0,"oldpeak":2.3,"slope":3,"ca":0,"thal":6}'
+wrk.headers["Content-Type"] = "application/json"
